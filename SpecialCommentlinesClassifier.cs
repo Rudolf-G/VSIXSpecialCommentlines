@@ -22,7 +22,7 @@ namespace VSIXSpecialCommentlines
       /// <param name="registry">Classification registry.</param>
       internal SpecialCommentlinesClassifier(IClassificationTypeRegistryService registry)
       {
-         this.classificationType1stChar = registry.GetClassificationType("SpecialCommentlines1stChar");
+         this.classificationType1stChar = registry.GetClassificationType(SpecialCommentlinesClassificationDefinition.SpecialCommentlines1stChar);
       }
 
       #region IClassifier

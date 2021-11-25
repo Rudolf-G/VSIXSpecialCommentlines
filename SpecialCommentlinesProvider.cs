@@ -10,7 +10,7 @@ namespace VSIXSpecialCommentlines
    /// Classifier provider. It adds the classifier to the set of classifiers.
    /// </summary>
    [Export(typeof(IClassifierProvider))]
-   [ContentType("text")] // This classifier applies to text-files ("CSharp" => C#; "text" => all text files; "code" => only to code-files; ...)
+   [ContentType("csharp")] // This classifier applies to ... ("csharp" => C#; "text" => all text files; "code" => only to code-files; ...)
    internal class SpecialCommentlinesProvider : IClassifierProvider
    {
       // Disable "Field is never assigned to..." compiler's warning. Justification: the field is assigned by MEF.

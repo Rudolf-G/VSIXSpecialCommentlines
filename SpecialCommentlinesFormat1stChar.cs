@@ -10,8 +10,8 @@ namespace VSIXSpecialCommentlines
    /// Defines an editor format for the "SpecialCommentlines1stChar" type
    /// </summary>
    [Export(typeof(EditorFormatDefinition))]
-   [ClassificationType(ClassificationTypeNames = "SpecialCommentlines1stChar")]
-   [Name("SpecialCommentlines1stChar")]
+   [ClassificationType(ClassificationTypeNames = SpecialCommentlinesClassificationDefinition.SpecialCommentlines1stChar)]
+   [Name(SpecialCommentlinesClassificationDefinition.SpecialCommentlines1stChar)]
    [UserVisible(true)] // This should be visible to the end user
    [Order(After = Priority.High)] // Insert after high priority classifiers (give highest priority)
    internal sealed class SpecialCommentlinesFormat1stChar : ClassificationFormatDefinition
