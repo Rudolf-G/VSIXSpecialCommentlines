@@ -10,25 +10,16 @@ namespace VSIXSpecialCommentlines
    /// Classifier provider. It adds the classifier to the set of classifiers.
    /// </summary>
    [Export(typeof(IClassifierProvider))]
-   [ContentType("csharp")] // This classifier applies to ... ("csharp" => C#; "text" => all text files; "code" => only to code-files; ...)
+   [ContentType("csharp")]
+   // This classifier applies to ... ("csharp" => C#; "text" => all text files; "code" => only to code-files; ...)
    internal class SpecialCommentlinesProvider : IClassifierProvider
    {
-      // Disable "Field is never assigned to..." compiler's warning. Justification: the field is assigned by MEF.
-#pragma warning disable 649
-
       /// <summary>
       /// Classification registry to be used for getting a reference
       /// to the custom classification type later.
       /// </summary>
       [Import]
-#pragma warning disable IDE0044 // Modifizierer "readonly" hinzufügen
-      private IClassificationTypeRegistryService classificationRegistry;
-
-#pragma warning restore IDE0044 // Modifizierer "readonly" hinzufügen
-
-#pragma warning restore 649
-
-      #region IClassifierProvider
+      internal IClassificationTypeRegistryService classificationRegistry = null;
 
       /// <summary>
       /// Gets a classifier for the given text buffer.
@@ -40,7 +31,5 @@ namespace VSIXSpecialCommentlines
          return buffer.Properties.GetOrCreateSingletonProperty<SpecialCommentlinesClassifier>(
             creator: () => new SpecialCommentlinesClassifier(this.classificationRegistry));
       }
-
-      #endregion
    }
 }

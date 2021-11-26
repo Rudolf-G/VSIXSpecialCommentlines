@@ -47,8 +47,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="SpecialCommentlinesClassifier.cs" />
-    <Compile Include="SpecialCommentlinesClassificationDefinition.cs" />
-    <Compile Include="SpecialCommentlinesFormat1stChar.cs" />
+    <Compile Include="SpecialCommentlinesClassificationDefinitions.cs" />
+    <Compile Include="SpecialCommentlinesFormats.cs" />
     <Compile Include="SpecialCommentlinesProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VSIXMarkSpecialCommentlinesPackage.cs" />

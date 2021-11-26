@@ -14,7 +14,10 @@ namespace VSIXSpecialCommentlines
       ///// <summary>
       ///// Classification type.
       ///// </summary>
-      private readonly IClassificationType classificationType1stChar;
+      //private readonly IClassificationType classificationType1stChar;
+      //private readonly IClassificationType classificationTypeContent;
+
+      IClassificationTypeRegistryService _classificationTypeRegistry;
 
       /// <summary>
       /// Initializes a new instance of the <see cref="SpecialCommentlinesClassifier"/> class.
@@ -22,7 +25,11 @@ namespace VSIXSpecialCommentlines
       /// <param name="registry">Classification registry.</param>
       internal SpecialCommentlinesClassifier(IClassificationTypeRegistryService registry)
       {
-         this.classificationType1stChar = registry.GetClassificationType(SpecialCommentlinesClassificationDefinition.SpecialCommentlines1stChar);
+         this._classificationTypeRegistry = registry;
+
+         //this.classificationType1stChar = registry.GetClassificationType(SpecialCommentlinesClassificationDefinitions.SpecialCommentlines1stChar);
+
+         //this.classificationTypeContent = registry.GetClassificationType(SpecialCommentlinesClassificationDefinitions.SpecialCommentlinesContent);
       }
 
       #region IClassifier
@@ -66,12 +73,14 @@ namespace VSIXSpecialCommentlines
             int startno = snapshotSpan.Start.GetContainingLine().LineNumber;
             int endno = (snapshotSpan.End - 1).GetContainingLine().LineNumber;
 
+            // I don't trust the test, which shows that there is always only one line
             for (int lineNumber = startno; lineNumber <= endno; lineNumber++)
             {
+               IClassificationType type = null;
+
                ITextSnapshotLine line = snapshot.GetLineFromLineNumber(lineNumber);
                ITextSnapshot text = line.Snapshot;
 
-               // don't trust the test, which shows that there is always only one line
                for (int charNumber = line.Start; charNumber < line.End - 2; charNumber++)
                {
                   char c = text[charNumber];
@@ -85,17 +94,21 @@ namespace VSIXSpecialCommentlines
                         classificationSpans = new List<ClassificationSpan>(10); // (2); <<<<<<<<<<<<<<<<<<
 
                      // Highlite the 1st char of the comment
+                     type = _classificationTypeRegistry.GetClassificationType 
+                           (SpecialCommentlinesClassificationDefinitions.SpecialCommentlines1stChar);
                      classificationSpans.Add(
                         new ClassificationSpan(
-                           new SnapshotSpan(text, charNumber + 2, 1),
-                           this.classificationType1stChar));
+                           new SnapshotSpan(text, charNumber + 2, 1), type)
+                        );
 
-                     //// Set color of the rest of the line
-                     //if (line.End - charNumber - 3 > 0)
-                     //   classificationSpans.Add(
-                     //   new ClassificationSpan(
-                     //      new SnapshotSpan(text, charNumber + 3, line.End - charNumber - 3),
-                     //      this.classificationType2));
+                     // Set color of the rest of the line
+                     type = _classificationTypeRegistry.GetClassificationType
+                           (SpecialCommentlinesClassificationDefinitions.SpecialCommentlinesContent);
+                     if (line.End - charNumber - 3 > 0)
+                        classificationSpans.Add(
+                        new ClassificationSpan(
+                           new SnapshotSpan(text, charNumber + 3, line.End - charNumber - 3),type)
+                        );
 
                      // The following test can be used to show that List<ClassificationSpan>(2) is typically sufficent 
                      // if (classificationSpans.Count > 1)
