@@ -91,7 +91,7 @@ namespace VSIXSpecialCommentlines
                   if (c == '/' && text[charNumber + 1] == '/' && text[charNumber + 2] == '|')
                   {  // found "//|"
                      if (classificationSpans == null)
-                        classificationSpans = new List<ClassificationSpan>(10); // (2); <<<<<<<<<<<<<<<<<<
+                        classificationSpans = new List<ClassificationSpan>(2);
 
                      // Highlite the 1st char of the comment
                      type = _classificationTypeRegistry.GetClassificationType 
@@ -121,7 +121,7 @@ namespace VSIXSpecialCommentlines
          }
 
          if (classificationSpans == null)
-            classificationSpans = new List<ClassificationSpan>(10);  // (0) <<<<<<<<<<<<<<<<<<<<<<<
+            classificationSpans = new List<ClassificationSpan>(0);
          return classificationSpans;
       }
 
